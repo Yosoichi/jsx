@@ -45,7 +45,7 @@ switch(doc.rulerUnits){
 
 //オフセット値を設定
 var prmpt=prompt("オフセット値を入力（単位："+unit+"）","");
-if(prmpt=!null){
+if(prmpt!=null){
     try{
     //全角数字対応
     var prrep = prmpt.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
