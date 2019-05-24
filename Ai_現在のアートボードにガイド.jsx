@@ -1,11 +1,49 @@
-﻿//「ガイドマン&トンボマン」としてCEP化
-
 //現在のアートボードを求める
 var doc=app.activeDocument;
 var ab=doc.artboards;
 var abId=ab.getActiveArtboardIndex();
 var activeAb=ab[abId];
-var offset=0;
+
+//表示する単位を設定
+//単位ごとの条件分岐。除算する係数を設定
+switch(doc.rulerUnits){
+	case RulerUnits.Millimeters:
+		var unit="mm";
+	break;
+	
+	case RulerUnits.Points:
+		var unit="pt";
+	break;
+	
+	case RulerUnits.Pixels:
+		var unit="pixel";
+	break;
+	
+	case RulerUnits.Inches:
+		var unit="インチ";
+	break;
+	
+	case RulerUnits.Qs:
+		var unit="Q";
+	break;
+	
+	case RulerUnits.Picas:
+		var unit="パイカ";
+	break;
+	
+	default:
+		var unit="";
+	break;
+}
+
+
+//ページ指定
+var prmpt=prompt("オフセット値を入力（単位："+unit+"）","0");
+//全角数字対応
+var prrep = prmpt.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+	return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+	});
+var offset=Number(prrep);
 
 //単位ごとの条件分岐。除算する係数を設定
     switch(doc.rulerUnits){
@@ -28,10 +66,6 @@ var offset=0;
             break;
         case RulerUnits.Picas:
             var coefficient=12;
-			var offsetInt=parseFloat(offset)*coefficient;
-            break;
-        case RulerUnits.Centimeters:
-            var coefficient=28.346;
 			var offsetInt=parseFloat(offset)*coefficient;
             break;
         default:
